@@ -1,0 +1,22 @@
+.display {
+    height: 60%;
+    width: 100%;
+    background-color: #63DAFC;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.display .number {
+    font-weight: bold;
+    font-size: 100px;
+}
+
+.display .maxNumber {
+    font-weight: bold;
+    font-size: 120px;
+    color: red;
+}
+
+
