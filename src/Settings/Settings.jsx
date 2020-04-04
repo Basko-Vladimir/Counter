@@ -6,11 +6,15 @@ const Settings = (props) => {
         <div className={s.settings}>
             <div className={s.settingsItem}>
                 <span>max value:</span>
-                <input type="number" />
+                <input type="number"
+                       onChange={props.changeMaxValue}
+                       className={props.errorMaxCount ? s.error : ''}/>
             </div>
             <div className={s.settingsItem}>
                 <span>start value:</span>
-                <input type="number" />
+                <input type="number"
+                       onChange={props.changeStartValue}
+                       className={props.errorStartCount ? s.error : ''} />
             </div>
         </div>
     )

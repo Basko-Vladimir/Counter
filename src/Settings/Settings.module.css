@@ -28,3 +28,8 @@
     text-align: center;
 }
 
+.error{
+    border-color: red;
+    background-color: rosybrown;
+}
+

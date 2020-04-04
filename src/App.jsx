@@ -12,10 +12,13 @@ class App extends React.Component {
             inc: {
                 name: 'inc',
                 incFunc: () => {
-                    let currentCount = this.state.count;
+                    let currentCount = this.state.startCount.setStartCount;
                     this.setState({
                         ...this.state,
-                        count: ++currentCount
+                        startCount: {
+                            ...this.state.startCount,
+                            setStartCount: ++currentCount
+                        }
                     })
                 }
             },
@@ -24,23 +27,60 @@ class App extends React.Component {
                 resetFunc: () => {
                     this.setState({
                         ...this.state,
-                        count: 0
+                        startCount: {
+                            ...this.state.startCount,
+                            setStartCount: 0
+                        }
                     })
                 }
             },
             set: {name: 'set'}
         },
-        countMax: 5,
-        countStart:0
+        maxCount: {
+            currentMaxCount: null,
+            setMaxCount: 5,
+            errorMaxCount: false
+        },
+        startCount:{
+            currentStartCount: null,
+            setStartCount: 0,
+            errorStartCount: false
+        },
+        displayValue: 0
     };
 
-    changeMaxValue = () => {
-        debugger
-        alert('changeMaxValue');
+    changeMaxValue = (e) => {
+        let currentValue = e.currentTarget.value;
+        this.setState({
+            ...this.state,
+            maxCount: {
+                ...this.state.maxCount,
+                currentValue
+            }
+        });
     };
 
-    changeStartValue = () => {
-        alert('changeStartValue');
+    changeStartValue = (e) => {
+        let currentValue = e.currentTarget.value;
+        if (currentValue < this.state.startCount.setStartCount) {
+            this.setState({
+                ...this.state,
+                startCount: {
+                    ...this.state.startCount,
+                    errorStartCount: true
+                },
+                displayValue: 'Incorrect Value'
+            })
+        } else {
+            this.setState({
+                ...this.state,
+                startCount: {
+                    setStartCount: 0,
+                    errorStartCount: false,
+                    currentValue
+                }
+            });
+        }
     };
 
 
@@ -49,16 +89,20 @@ class App extends React.Component {
         return (
             <div className="App">
                 <div className={'wrap'}>
-                    <Settings/>
-                    <SettingsButtons btnName={this.state.buttons.set.name} changeMaxValue={this.changeMaxValue}/>
+                    <Settings changeMaxValue={this.changeMaxValue}
+                              changeStartValue={this.changeStartValue}
+                              errorStartCount={this.state.startCount.errorStartCount}
+                              errorMaxCount={this.state.maxCount.errorMaxCount} />
+                    <SettingsButtons btnName={this.state.buttons.set.name} />
                 </div>
                 <div className={'wrap'}>
-                    <Display countStart={this.state.countStart} countMax={this.state.countMax}/>
-                    <CounterButtons buttons={this.state.buttons}
-                                    incFunc={this.state.buttons.inc.incFunc}
-                                    resetFunc={this.state.buttons.reset.resetFunc}
-                                    count={this.state.count}
-                                    countMax={this.state.countMax} />
+                    <Display startCount={this.state.startCount.setStartCount}
+                             maxCount={this.state.maxCount.setMaxCount}
+                             displayValue={this.state.displayValue} />
+                    <CounterButtons inc={this.state.buttons.inc}
+                                    reset={this.state.buttons.reset}
+                                    startCount={this.state.startCount.setStartCount}
+                                    maxCount={this.state.maxCount.setMaxCount} />
                 </div>
             </div>
         );
