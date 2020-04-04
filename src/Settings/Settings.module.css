@@ -1,0 +1,30 @@
+.settings {
+    height: 60%;
+    width: calc(100% - 40px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 2px solid #63DAFC;
+    border-radius: 10px;
+    color:#63DAFC;
+    padding: 0 20px;
+}
+
+.settings .settingsItem {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.settings .settingsItem span {
+    font-size:30px;
+    font-weight: bolder;
+}
+
+.settings .settingsItem input {
+    border: 2px solid #63DAFC;
+    border-radius: 5px;
+    text-align: center;
+}
+

@@ -1,8 +1,8 @@
 import React from "react";
 import Button from "./Button/Button";
-import s from "./Buttons.module.css"
+import s from "./CounterButtons.module.css"
 
-const Buttons = (props) => {
+const CounterButtons = (props) => {
     return (
         <div className={s.buttons}>
             <Button btnName={props.buttons.inc.name} isDisabled={props.count === props.countMax} func={props.incFunc}/>
@@ -11,4 +11,4 @@ const Buttons = (props) => {
     )
 };
 
-export default Buttons;
+export default CounterButtons;
