@@ -6,10 +6,10 @@ const CounterButtons = (props) => {
     return (
         <div className={s.buttons}>
             <Button btnName={props.inc.name}
-                    isDisabled={props.startCount === props.maxCount}
+                    isDisabled={props.displayValue === props.setMaxCount || isNaN(props.displayValue)}
                     func={props.inc.incFunc}/>
             <Button btnName={props.reset.name}
-                    isDisabled={!props.startCount}
+                    isDisabled={props.displayValue === props.setStartCount || isNaN(props.displayValue)}
                     func={props.reset.resetFunc}/>
         </div>
     )

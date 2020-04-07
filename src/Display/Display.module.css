@@ -7,15 +7,21 @@
     justify-content: center;
     align-items: center;
 }
+.display span {
+    font-weight: bold;
+    font-size: 30px;
+}
 
 .display .number {
-    font-weight: bold;
     font-size: 100px;
 }
 
 .display .maxNumber {
-    font-weight: bold;
     font-size: 120px;
+    color: red;
+}
+
+.display .errorText {
     color: red;
 }
 

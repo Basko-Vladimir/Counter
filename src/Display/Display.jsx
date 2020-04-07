@@ -2,10 +2,24 @@ import React from "react";
 import s from "./Display.module.css";
 
 const Display = (props) => {
+
+    let changeClass = () => {
+        switch (props.displayValue) {
+            case props.setMaxCount:
+                return s.maxNumber;
+            case 'Incorrect value':
+                return s.errorText;
+            case 'Enter values and press "set"':
+                return s.text;
+            default:
+                return s.number
+        }
+
+    };
+
     return (
         <div className={s.display}>
-            <span className={(props.maxCount === props.startCount) || isNaN(props.displayValue)
-                ? s.maxNumber : s.number}>{props.displayValue}</span>
+            <span className={changeClass()}>{props.displayValue}</span>
         </div>
     )
 };
