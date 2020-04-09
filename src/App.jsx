@@ -7,85 +7,86 @@ import SettingsButtons from "./SettingsButtons/SettingsButtons";
 
 class App extends React.Component {
 
+    componentDidMount() {
+        let setValues = JSON.parse(localStorage.getItem('setValues'));
+        if (setValues) {
+            this.setState({
+                ...this.state,
+                currentMaxCount: setValues.setMaxCount,
+                currentStartCount: setValues.setStartCount,
+                displayValue: setValues.setStartCount
+            })
+        }
+    }
+
     state = {
         buttons: {
             inc: {
                 name: 'inc',
-                incFunc: () => {
+                incFunc:  () => {
                     let currentDisplayValue = this.state.displayValue;
                     this.setState({
                         ...this.state,
                         displayValue: ++currentDisplayValue
                     })
-                }
-            },
+                }},
             reset: {
                 name: 'reset',
-                resetFunc: () => {
+            resetFunc: () => {
+                this.setState({
+                    ...this.state,
+                    displayValue: this.state.currentStartCount
+                })
+            }},
+            set: {
+                name: 'set',
+                setValues: () => {
+                    let setValues = JSON.stringify({
+                        setStartCount: this.state.currentStartCount,
+                        setMaxCount: this.state.currentMaxCount
+                    });
+                    localStorage.setItem('setValues', setValues);
                     this.setState({
                         ...this.state,
-                        displayValue: 0
+                        displayValue: this.state.currentStartCount
                     })
                 }
-            },
-            set: {name: 'set'}
+            }
         },
-        maxCount: {
-            currentMaxCount: 1,
-            setMaxCount: 1,
-            errorMaxCount: false
-        },
-        startCount:{
-            currentStartCount: 0,
-            setStartCount: 0,
-            errorStartCount: false
-        },
+        currentMaxCount: 5,
+        currentStartCount: 0,
         displayValue: 0
     };
 
-    changeValue = (e) => {
-        let currentElem = e.currentTarget;
-        switch (currentElem.name) {
-            case 'startValue':
-                this.setState({
-                    ...this.state,
-                    startCount: {
-                        ...this.state.startCount,
-                        currentStartCount: +currentElem.value
-                    },
-                    displayValue: 'Enter values and press "set"'
-                });
-                if (currentElem.value < 0) {
-                    this.setState({
-                        ...this.state,
-                        startCount: {
-                            ...this.state.startCount,
-                            errorStartCount: true
-                        },
-                        displayValue: 'Incorrect value'
-                    });
-                }
-                break;
-            case 'maxValue':
-                this.setState({
-                    ...this.state,
-                    maxCount:{
-                        ...this.maxCount,
-                        currentMaxCount: +currentElem.value
-                    },
-                    displayValue: 'Enter values and press "set"'
-                });
-                if (currentElem.value <= this.state.startCount.setStartCount)
-                    this.setState({
-                        ...this.state,
-                        maxCount: {
-                            ...this.state.maxCount,
-                            errorMaxCount: true
-                        },
-                        displayValue: 'Incorrect value'
-                    });
-                break;
-            default: return
+    changeStartValue = (newValue, error) => {
+        if (error) {
+            this.setState({
+                ...this.state,
+                currentStartCount: +newValue,
+                displayValue: 'Incorrect value'
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                currentStartCount: +newValue,
+                displayValue: 'Enter values and press "set"'
+            });
+        }
+    };
+
+    changeMaxValue = (newValue) => {
+        if (newValue <= this.state.currentStartCount) {
+            this.setState({
+                ...this.state,
+                currentMaxCount: +newValue,
+                displayValue: 'Incorrect value'
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                currentMaxCount: +newValue,
+                displayValue: 'Enter values and press "set"'
+            });
         }
     };
 
@@ -93,24 +94,19 @@ class App extends React.Component {
         return (
             <div className="App">
                 <div className={'wrap'}>
-                    <Settings currentStartCount={this.state.startCount.currentStartCount}
-                              currentMaxCount={this.state.maxCount.currentMaxCount}
-                              changeValue={this.changeValue}
-                              errorStartCount={this.state.startCount.errorStartCount}
-                              errorMaxCount={this.state.maxCount.errorMaxCount} />
-                    <SettingsButtons btnName={this.state.buttons.set.name} />
+                    <Settings currentMaxCount={this.state.currentMaxCount}
+                              currentStartCount={this.state.currentStartCount}
+                              changeMaxValue={this.changeMaxValue}
+                              changeStartValue={this.changeStartValue} />
+                    <SettingsButtons setBtn={this.state.buttons.set} />
                 </div>
                 <div className={'wrap'}>
-                    <Display setStartCount={this.state.startCount.setStartCount}
-                             setMaxCount={this.state.maxCount.setMaxCount}
-                             displayValue={this.state.displayValue}
-                             errorStartCount={this.state.startCount.errorStartCount}
-                             errorMaxCount={this.state.startCount.errorMaxCount} />
-                    <CounterButtons inc={this.state.buttons.inc}
-                                    reset={this.state.buttons.reset}
-                                    displayValue={this.state.displayValue}
-                                    setMaxCount={this.state.maxCount.setMaxCount}
-                                    setStartCount={this.state.startCount.setStartCount} />
+                    <Display displayValue={this.state.displayValue}
+                             currentMaxCount={this.state.currentMaxCount} />
+                    <CounterButtons displayValue={this.state.displayValue}
+                                    currentMaxCount={this.state.currentMaxCount}
+                                    currentStartCount={this.state.currentStartCount}
+                                    buttons={this.state.buttons} />
                 </div>
             </div>
         );
