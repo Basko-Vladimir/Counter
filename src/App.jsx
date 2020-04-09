@@ -6,7 +6,6 @@ import Settings from "./Settings/Settings";
 import SettingsButtons from "./SettingsButtons/SettingsButtons";
 
 class App extends React.Component {
-
     componentDidMount() {
         let setValues = JSON.parse(localStorage.getItem('setValues'));
         if (setValues) {
