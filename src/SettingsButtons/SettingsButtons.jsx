@@ -6,7 +6,9 @@ const SettingsButtons = (props) => {
     return(
         <div className={s.buttons}>
             <Button btnName={props.setBtn.name}
-                    func={props.setBtn.setValues} />
+                    func={props.setBtn.setValues}
+                    isDisabled={props.displayValue === 'Incorrect value'}
+            />
         </div>
     )
 };

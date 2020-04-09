@@ -97,7 +97,8 @@ class App extends React.Component {
                               currentStartCount={this.state.currentStartCount}
                               changeMaxValue={this.changeMaxValue}
                               changeStartValue={this.changeStartValue} />
-                    <SettingsButtons setBtn={this.state.buttons.set} />
+                    <SettingsButtons setBtn={this.state.buttons.set}
+                                     displayValue={this.state.displayValue} />
                 </div>
                 <div className={'wrap'}>
                     <Display displayValue={this.state.displayValue}
