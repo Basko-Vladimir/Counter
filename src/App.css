@@ -2,8 +2,13 @@
   width: 100%;
   height: 100vh;
   background-color: #2A2C35;
-  display: flex;
   padding-top: 20%;
+}
+
+.wrapApp {
+  width: 75%;
+  margin: 0 auto;
+  display: flex;
 }
 
 .App .wrap {

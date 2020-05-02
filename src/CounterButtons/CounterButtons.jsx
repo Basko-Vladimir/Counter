@@ -5,12 +5,12 @@ import s from "./CounterButtons.module.css"
 const CounterButtons = (props) => {
     return (
         <div className={s.buttons}>
-            <Button btnName={props.buttons.inc.name}
+            <Button btnName={props.incTitle}
                     isDisabled={props.displayValue === props.currentMaxCount || isNaN(props.displayValue)}
-                    func={props.buttons.inc.incFunc}/>
-            <Button btnName={props.buttons.reset.name}
+                    func={props.inc}/>
+            <Button btnName={props.resetTitle}
                     isDisabled={props.displayValue === props.currentStartCount || isNaN(props.displayValue)}
-                    func={props.buttons.reset.resetFunc}/>
+                    func={props.reset}/>
         </div>
     )
 };

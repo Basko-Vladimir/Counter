@@ -7,6 +7,7 @@ class Settings extends React.Component {
         errorMaxCount: false,
         errorStartCount: false
     };
+
     onChangeValue = (e) => {
         let newValue = +e.currentTarget.value;
         switch (e.currentTarget.name) {
@@ -32,7 +33,7 @@ class Settings extends React.Component {
             case 'startValue':
                 if (newValue < 0 || newValue > this.props.currentMaxCount){
                     this.setState({errorStartCount: true});
-                    this.props.changeStartValue(null, true);
+                    this.props.changeStartValue(this.props.currentStartCount, true);
                 } else if (newValue === this.props.currentMaxCount){
                     this.setState({errorStartCount: true, errorMaxCount: true});
                     this.props.changeStartValue(newValue, true);

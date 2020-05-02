@@ -4,113 +4,55 @@ import Display from "./Display/Display";
 import CounterButtons from "./CounterButtons/CounterButtons";
 import Settings from "./Settings/Settings";
 import SettingsButtons from "./SettingsButtons/SettingsButtons";
+import {connect} from "react-redux";
+import {changeMaxValue, changeStartValue, inc, reset, setSavedValues, setValues} from "./redux/counter-reducer";
+
 
 class App extends React.Component {
     componentDidMount() {
-        let setValues = JSON.parse(localStorage.getItem('setValues'));
-        if (setValues) {
-            this.setState({
-                ...this.state,
-                currentMaxCount: setValues.setMaxCount,
-                currentStartCount: setValues.setStartCount,
-                displayValue: setValues.setStartCount
-            })
-        }
+        this.props.setSavedValues();
     }
-
-    state = {
-        buttons: {
-            inc: {
-                name: 'inc',
-                incFunc:  () => {
-                    let currentDisplayValue = this.state.displayValue;
-                    this.setState({
-                        ...this.state,
-                        displayValue: ++currentDisplayValue
-                    })
-                }},
-            reset: {
-                name: 'reset',
-            resetFunc: () => {
-                this.setState({
-                    ...this.state,
-                    displayValue: this.state.currentStartCount
-                })
-            }},
-            set: {
-                name: 'set',
-                setValues: () => {
-                    let setValues = JSON.stringify({
-                        setStartCount: this.state.currentStartCount,
-                        setMaxCount: this.state.currentMaxCount
-                    });
-                    localStorage.setItem('setValues', setValues);
-                    this.setState({
-                        ...this.state,
-                        displayValue: this.state.currentStartCount
-                    })
-                }
-            }
-        },
-        currentMaxCount: 5,
-        currentStartCount: 0,
-        displayValue: 0
-    };
-
-    changeStartValue = (newValue, error) => {
-        if (error) {
-            this.setState({
-                ...this.state,
-                currentStartCount: +newValue,
-                displayValue: 'Incorrect value'
-            });
-        } else {
-            this.setState({
-                ...this.state,
-                currentStartCount: +newValue,
-                displayValue: 'Enter values and press "set"'
-            });
-        }
-    };
-
-    changeMaxValue = (newValue) => {
-        if (newValue <= this.state.currentStartCount) {
-            this.setState({
-                ...this.state,
-                currentMaxCount: +newValue,
-                displayValue: 'Incorrect value'
-            });
-        } else {
-            this.setState({
-                ...this.state,
-                currentMaxCount: +newValue,
-                displayValue: 'Enter values and press "set"'
-            });
-        }
-    };
 
     render() {
         return (
             <div className="App">
-                <div className={'wrap'}>
-                    <Settings currentMaxCount={this.state.currentMaxCount}
-                              currentStartCount={this.state.currentStartCount}
-                              changeMaxValue={this.changeMaxValue}
-                              changeStartValue={this.changeStartValue} />
-                    <SettingsButtons setBtn={this.state.buttons.set}
-                                     displayValue={this.state.displayValue} />
-                </div>
-                <div className={'wrap'}>
-                    <Display displayValue={this.state.displayValue}
-                             currentMaxCount={this.state.currentMaxCount} />
-                    <CounterButtons displayValue={this.state.displayValue}
-                                    currentMaxCount={this.state.currentMaxCount}
-                                    currentStartCount={this.state.currentStartCount}
-                                    buttons={this.state.buttons} />
+                <div className='wrapApp'>
+                    <div className={'wrap'}>
+                        <Settings currentMaxCount={this.props.currentMaxCount}
+                                  currentStartCount={this.props.currentStartCount}
+                                  changeMaxValue={this.props.changeMaxValue}
+                                  changeStartValue={this.props.changeStartValue} />
+                        <SettingsButtons setTitle={this.props.setTitle}
+                                         displayValue={this.props.displayValue}
+                                         set={this.props.setValues} />
+                    </div>
+                    <div className={'wrap'}>
+                        <Display displayValue={this.props.displayValue}
+                                 currentMaxCount={this.props.currentMaxCount} />
+                        <CounterButtons displayValue={this.props.displayValue}
+                                        currentMaxCount={this.props.currentMaxCount}
+                                        currentStartCount={this.props.currentStartCount}
+                                        resetTitle={this.props.resetTitle}
+                                        incTitle={this.props.incTitle}
+                                        inc={this.props.inc}
+                                        reset={this.props.reset}/>
+                    </div>
                 </div>
             </div>
         );
     }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        displayValue: state.displayValue,
+        currentMaxCount: state.currentMaxCount,
+        currentStartCount: state.currentStartCount,
+        incTitle: state.inc.title,
+        resetTitle: state.reset.title,
+        setTitle: state.set.title
+    }
+};
+
+export default connect(mapStateToProps,
+    {reset, inc, setValues, changeStartValue, changeMaxValue, setSavedValues})(App);
