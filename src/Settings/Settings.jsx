@@ -1,8 +1,8 @@
 import React from "react";
 import s from "./Settings.module.css";
+import SettingsField from "./SettingsField/SettingsField";
 
 class Settings extends React.Component {
-
     state = {
         errorMaxCount: false,
         errorStartCount: false
@@ -52,22 +52,16 @@ class Settings extends React.Component {
 
         return(
             <div className={s.settings}>
-                <div className={s.settingsItem}>
-                    <span>max value:</span>
-                    <input type="number"
-                           name={'maxValue'}
-                           onChange={this.onChangeValue}
-                           className={classMaxCount}
-                           value={this.props.currentMaxCount} />
-                </div>
-                <div className={s.settingsItem}>
-                    <span>start value:</span>
-                    <input type="number"
-                           name={'startValue'}
-                           onChange={this.onChangeValue}
-                           className={classStartCount}
-                           value={this.props.currentStartCount} />
-                </div>
+                <SettingsField title={'max value'}
+                               fieldName={'maxValue'}
+                               onChangeValue={this.onChangeValue}
+                               classField={classMaxCount}
+                               currentValue={this.props.currentMaxCount}/>
+                <SettingsField title={'start value'}
+                               fieldName={'startValue'}
+                               onChangeValue={this.onChangeValue}
+                               classField={classStartCount}
+                               currentValue={this.props.currentStartCount}/>
             </div>
         )
     }
