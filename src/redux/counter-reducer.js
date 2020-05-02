@@ -6,9 +6,6 @@ const CHANGE_MAX_VALUE = 'CHANGE_MAX_VALUE';
 const SET_SAVED_VALUES = 'SET_SAVED_VALUES';
 
 const initialState = {
-    inc: {title: 'inc'},
-    reset: {title: 'reset'},
-    set: {title: 'set'},
     displayValue: 0,
     currentStartCount: 0,
     currentMaxCount: 5

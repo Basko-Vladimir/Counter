@@ -5,7 +5,7 @@ import Button from "../CounterButtons/Button/Button";
 const SettingsButtons = (props) => {
     return(
         <div className={s.buttons}>
-            <Button btnName={props.setTitle}
+            <Button btnName={'set'}
                     func={props.set}
                     isDisabled={props.displayValue === 'Incorrect value'}
             />

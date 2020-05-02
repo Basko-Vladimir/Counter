@@ -22,8 +22,7 @@ class App extends React.Component {
                                   currentStartCount={this.props.currentStartCount}
                                   changeMaxValue={this.props.changeMaxValue}
                                   changeStartValue={this.props.changeStartValue} />
-                        <SettingsButtons setTitle={this.props.setTitle}
-                                         displayValue={this.props.displayValue}
+                        <SettingsButtons displayValue={this.props.displayValue}
                                          set={this.props.setValues} />
                     </div>
                     <div className={'wrap'}>
@@ -32,8 +31,6 @@ class App extends React.Component {
                         <CounterButtons displayValue={this.props.displayValue}
                                         currentMaxCount={this.props.currentMaxCount}
                                         currentStartCount={this.props.currentStartCount}
-                                        resetTitle={this.props.resetTitle}
-                                        incTitle={this.props.incTitle}
                                         inc={this.props.inc}
                                         reset={this.props.reset}/>
                     </div>
@@ -47,10 +44,7 @@ const mapStateToProps = (state) => {
     return {
         displayValue: state.displayValue,
         currentMaxCount: state.currentMaxCount,
-        currentStartCount: state.currentStartCount,
-        incTitle: state.inc.title,
-        resetTitle: state.reset.title,
-        setTitle: state.set.title
+        currentStartCount: state.currentStartCount
     }
 };
 
